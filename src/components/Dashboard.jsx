@@ -7,11 +7,15 @@ import { Link } from "react-router-dom";
 function Dashboard() {
   const [schedules, setSchedules] = useState([]);
   const [user, setUser] = useState({});
+  const [loggedIn, setLoggedIn] = useState(false);
 
   function getUserDetails() {
     axios
       .get("http://localhost:4000/api/v1/dashboard", { withCredentials: true })
-      .then((res) => setUser(res.data.user));
+      .then((res) => {
+        setLoggedIn(res.data.success);
+        setUser(res.data.user);
+      });
   }
 
   function getSchedule() {
@@ -35,6 +39,16 @@ function Dashboard() {
       });
   }
 
+  function logout() {
+    axios
+      .get("http://localhost:4000/api/v1/logout", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setLoggedIn(!res.data.success);
+      });
+  }
+
   useEffect(() => {
     getSchedule();
     getUserDetails();
@@ -42,16 +56,25 @@ function Dashboard() {
 
   return (
     <div>
-      <Button variant="white" type="submit">
-        <Link to="/create">create</Link>
-      </Button>
-      {schedules.map((schedule, index) => (
-        <Schedule
-          key={schedule._id}
-          schedule={schedule}
-          deleteSchedule={deleteSchedule}
-        />
-      ))}
+      {loggedIn ? (
+        <div>
+          <Button variant="white" type="submit">
+            <Link to="/create">create</Link>
+          </Button>
+          <Button variant="white" type="submit" onClick={logout}>
+            logout
+          </Button>
+          {schedules.map((schedule, index) => (
+            <Schedule
+              key={schedule._id}
+              schedule={schedule}
+              deleteSchedule={deleteSchedule}
+            />
+          ))}
+        </div>
+      ) : (
+        <div>You are not loggedin </div>
+      )}
     </div>
   );
 }

@@ -36,10 +36,10 @@ function CreateSchedule() {
         "http://localhost:4000/api/v1/schedule/create",
         {
           date,
-          startTime,
+          startTime: date,
           numberOfSlots: numberofSlots,
           duration,
-          brakTime: 0,
+          breakTime: 0,
         },
         {
           withCredentials: true,
@@ -63,7 +63,7 @@ function CreateSchedule() {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Date</Form.Label>
                   <Form.Control
-                    type="date"
+                    type="datetime-local"
                     name="date"
                     placeholder="Enter date"
                     value={date}
