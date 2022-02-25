@@ -1,4 +1,8 @@
 import "./App.css";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+
+import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ForgotPassword from "./components/ForgotPassword";
@@ -11,43 +15,34 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <div>
-          <ul>
-            <li>
-              <Link to="/login">login</Link>
-            </li>
-            <li>
-              <Link to="/signup">signup</Link>
-            </li>
-            <li>
-              <Link to="/forgotPassword">forgot password</Link>
-            </li>
-          </ul>
+    <div className="App container">
+      <div className="row">
+        <div className="col-12 bg-light p-0">
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/forgotPassword" element={<ForgotPassword />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/create" element={<CreateSchedule />} />
+              <Route
+                path="/schedulebooking/:scheduleId"
+                element={<ScheduleBooking />}
+              />
+              <Route path="/deleteslot/:scheduleId" element={<DeleteSlot />} />
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: "1rem" }}>
+                    <p>There's nothing here!</p>
+                  </main>
+                }
+              />
+            </Routes>
+          </Router>
         </div>
-
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forgotPassword" element={<ForgotPassword />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/create" element={<CreateSchedule />} />
-          <Route
-            path="/schedulebooking/:scheduleId"
-            element={<ScheduleBooking />}
-          />
-          <Route path="/deleteslot/:scheduleId" element={<DeleteSlot />} />
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>There's nothing here!</p>
-              </main>
-            }
-          />
-        </Routes>
-      </Router>
+      </div>
     </div>
   );
 }

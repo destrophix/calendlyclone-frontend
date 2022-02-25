@@ -70,6 +70,7 @@ function Login() {
                 <Button variant="primary" type="submit">
                   Submit
                 </Button>
+                <hr></hr>
                 <div>
                   <Link to="/signup">signup</Link>
                   <div></div>
